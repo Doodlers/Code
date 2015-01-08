@@ -7,34 +7,47 @@ int disp2=175;
 int vely=0;
 int accy=0;
 int tfc;
-void setup(){
-  size(200,100);
+int i=0;
+boolean crouch=false;
+void setup() {
+  size(200, 100);
+  frameRate(25);
 }
 
-void draw(){
+void draw() {
   background(135);
-  text("score:" + frameCount,10,20);
-  line(0,80,width,80);
-  ellipse(disp,65,10,10);
-  ellipse(disp2,75,10,10);
-  rect(30,start,10,sz);
-  if(keyPressed){
-    if(key==CODED){
-      if(keyCode==SHIFT){
+  text("score:" + frameCount, 10, 20);
+  line(0, 80, width, 80);
+  ellipse(disp, 65, 10, 10);
+  ellipse(disp2, 75, 10, 10);
+  rect(30, start, 10, sz);
+  if(crouch){
+    i++;
+    if(i==30){
+      sz=20;
+      start=60;
+      crouch=true;
+    }
+  }
+  if (keyPressed) {
+    if (key==CODED) {
+      if (keyCode==SHIFT||keyCode==DOWN) {
         start=70;
         sz=10;
-//        tfc=frameCount;
-//        tfc-=20;
-//        if(frameCount-tfc>20){
-//          start=60;
-//          sz=20;
+        crouch=true;
+      }
+      if (keyCode==UP) {
+        vely+=accy;
+        start+=vely;
+        vely=-1;
+        accy=1;
+        if (start==61) {
+          vely=0;
+          accy=0;
+          start=60;
         }
-        else{start=60;
-          sz=20;}
       }
     }
-//    if(key==' '){
-//      vel=
-//    }
   }
+}
 
