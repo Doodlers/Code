@@ -1,7 +1,8 @@
 int imagesRunning;
+int imagesShift;
 PImage p1, p2, p3, p4, p5;
-int px,py;
-int shiftx,shifty;
+int px, py;
+int shiftx, shifty;
 
 void setup() {
   p1 = loadImage("person1.png");
@@ -13,9 +14,9 @@ void setup() {
   px = 100;
   py = 380;
   shiftx = 100;
-  shifty = 400;
-  size(900,600);
-  frameRate (25);
+  shifty = 200;
+  size(900, 600);
+  frameRate (40);
 }
 
 void draw() {
@@ -36,21 +37,42 @@ void draw() {
   if (imagesRunning > 4) {
     imagesRunning = 1;
   }
-  { if (keyPressed) {
-    if(key== CODED) {
-      if (keyCode == DOWN) {
-        image(p5,px,py);
-        imagesRunning = 0;
+  { 
+    if (keyPressed) {
+      if (key== CODED) {
+        if (keyCode == DOWN) {
+          image(p5, px, py);
+          imagesRunning = 0;
+        }
       }
     }
   }
-}
-if (keyPressed) {
-  if (key == CODED) {
-    if (keyCode == UP) {
-      image(p1,shiftx,shifty); 
+  if (keyPressed) {
+    if (key == CODED) {
+      if (keyCode == UP) {
+        if (imagesShift == 1) {
+          image(p1, shiftx, shifty);
+          imagesRunning = 0;
+        }
+        if (imagesShift == 2) {
+          image(p2, shiftx, shifty);
+          imagesRunning = 0;
+        }
+        if (imagesShift == 3) {
+          image(p3, shiftx, shifty);
+          imagesRunning = 0;
+        }
+        if (imagesShift == 4) {
+          image(p4, shiftx, shifty);
+          imagesRunning = 0;
+        }
+        imagesShift++;
+        if (imagesShift > 4) {
+          imagesShift = 1; 
+          imagesRunning = 0;
+        }
+      }
     }
   }
-}
 }
 
