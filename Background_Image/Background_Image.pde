@@ -3,7 +3,7 @@ PImage bg;
 void setup() {
  size(900, 600); 
  noCursor();
- bg = loadImage("Lockers Background.jpg");
+ bg = loadImage("Lockers Background.JPG");
 }
 
 void draw() {
