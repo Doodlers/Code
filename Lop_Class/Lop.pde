@@ -2,15 +2,17 @@ class Lop{
  PVector loc, vel, acc; 
  float sz;
  
- Lop(float tempX, float tempY){
-   loc=new PVector(tempX, tempY);
+ Lop(float tempX){
+   loc=new PVector(tempX, 525);
    vel=new PVector(random(-5, -10), 0);
    acc=new PVector(0,0);
    sz=30;
  }
  
  void display(){
-  ellipse(loc.x, loc.y, sz, sz); 
+  rectMode(CENTER);
+  rect(loc.x, loc.y, sz, sz); 
+  //needs to become an image later!!!!!!!!!!!!!
  }
  
  void move(){
