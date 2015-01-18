@@ -6,11 +6,12 @@ ArrayList<Tsquare> tsquares=new ArrayList<Tsquare>();
 
 //AMOUNT TO ADD TO ARRAY LIST
 int amount=0;
-
 //RANDOM NUMBER GENERATOR FOR ADDING NEW THINGS TO ARRAY LIST 
-float rand;
-int countSinceLastLop=0;
-int countSinceLastTsquare=0;
+int addObject=0;
+float num;
+//float rand;
+//int countSinceLastLop=0;
+//int countSinceLastTsquare=0;
 
 //RECTANGLE FOR PERSON
 int personX = 50;
@@ -19,9 +20,17 @@ int personW=40;
 int personH=80;
 
 //VALUES FOR HOW THE PERSON JUMPS/ CROUCHES
+int velY;
+float accY;
 int jumpAmount=40;
 int normalH= 80;
 int crouchH=40;
+
+//HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
+int delay=20;
+int timeLeftUntilFall;
+int originalDelay=20;
+int platformDelay;
 
 //MAKING THE GAME START AND END
 int run=1;
@@ -39,95 +48,103 @@ void draw() {
     //MAKING THE GROUND
     line(0, 540, width, 540);
 
+    //STAND IN FOR THE PLATFORMS
+    line(0, height/2, width, height/2);
+
     //DRAWING THE RECTANGLE TO INTERACT WITH THE OBJECTS
     rectMode(CORNER);
     rect(personX, personY, personW, personH);
-    personY = 460;
-    personH=normalH;
 
-    //MAKING THE RECTANGLE JUMP OR CROUCH
+    //MAKING THE PERSON'S LOCATION CHANGE BY THE VELOCITY
+
+
+    //MAKING THE RECTANGLE JUMP OR CROUCH FOR A CERTAIN AMOUNT OF TIME
     if (keyPressed) {
+      delay=0;
       if (key == CODED) {
+        //UP ARROW MAKES HIM JUMP
         if (keyCode == UP) {
           personY= 460-jumpAmount;
           personH=normalH;
+          //DOWN ARROW MAKES HIM CROUCH
         } else if (keyCode == DOWN) {
           personY=540-crouchH;
           personH=crouchH;
         }
+        if (delay==originalDelay) {
+          personY = 460;
+          personH=normalH;
+        }
+        //SPACE SENDS HIM TO A PLATFORM
+      } else if (key==' ') {
+        if (personY>height/2-personH) {
+          velY=-6;
+          personY+=velY;
+        } else if (personY==height/2-personH) {
+          velY=0;
+          accY=0;
+          platformDelay=50;
+          //          if (delay==platformDelay) {
+          //            if (personY<540-personH) {
+          //              velY=1;
+          //              accY=.1;
+          //            } else {
+          //            }
+          //          }
+        }
       }
     }
 
-    println(rand);
-    rand=random(1);
-    countSinceLastTsquare++;
-    countSinceLastLop++;
+    println(delay);
+    delay++;
+    timeLeftUntilFall= originalDelay-delay;
 
     //ADDING NEW OBJECTS TO THE ARRAY LIST FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    if (rand<.01) {
-      if (countSinceLastTsquare>100) {
+    num=random(1);
+    if (addObject==50) {
+      if (num<.5) {
         lops.add(new Lop(random(width, width*2)));
-        countSinceLastTsquare=0;
-      }
-    } else if (rand>.99) {
-      if (countSinceLastLop>100) {
+        addObject=0;
+      } else if (num>.5) {
         tsquares.add(new Tsquare(random(width, width*2)));
-        countSinceLastLop=0;
+        addObject=0;
+      }
+    }
+    addObject++;
+
+    //USING METHODS FOR THE LOP CLASS
+    for (int i=lops.size ()-1; i>=0; i--) {
+      Lop l = lops.get(i);
+      l.move();
+      l.display();
+
+      if (l.off()) {
+        lops.remove(i);
+      }
+
+      //CHECKING IF THE RECTANGLE TOUCHES THE LOP OBJECTS
+      if (l.loc.x<personX+personW && l.loc.x+l.sz>personX && l.loc.y+l.sz>personY && l.loc.y<personY+personH) {
+        run=0;
+      }
+    }
+
+
+    //USING METHODS FOR THE TSQUARE CLASS
+    for (int i=tsquares.size ()-1; i>=0; i--) {
+      Tsquare t = tsquares.get(i);
+      t.move();
+      t.display();
+
+      if (t.off()) {
+        tsquares.remove(i);
+      }
+
+      //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
+      if (t.loc.x<personX+personW && t.loc.x+t.sz>personX && t.loc.y+t.sz>personY && t.loc.y<personY+personH) {
+        run=0;
       }
     }
   }
-  //    for (int i=tsquares.size ()-1; i>=0; i--) {
-  //      Tsquare t = tsquares.get(i);
-  //      if (t.loc.x=width-100) {
-  //        lops.add(new Lop(random(width, width*2)));
-  //      }
-  //    }
-  //  }
-  //
-  //  for (int j=lops.size ()-1; j>=0; j--) {
-  //    Lop l = lops.get(j);
-  //    if (l.loc.x<width-100) {
-  //      tsquares.add(new Tsquare(random(width*2, width*3)));
-  //    }
-  //  }
-
-  //USING METHODS FOR THE LOP CLASS
-  for (int i=lops.size ()-1; i>=0; i--) {
-    Lop l = lops.get(i);
-    l.move();
-    l.display();
-
-    if (l.off()) {
-      lops.remove(i);
-      lops.add(new Lop(random(width, width*2)));
-    }
-
-    //CHECKING IF THE RECTANGLE TOUCHES THE LOP OBJECTS
-    if (l.loc.x<personX+personW && l.loc.x+l.sz>personX && l.loc.y+l.sz>personY && l.loc.y<personY+personH) {
-      print("touch  ");
-      run=0;
-    }
-  }
-
-
-  //USING METHODS FOR THE TSQUARE CLASS
-  for (int i=tsquares.size ()-1; i>=0; i--) {
-    Tsquare t = tsquares.get(i);
-    t.move();
-    t.display();
-
-    if (t.off()) {
-      tsquares.remove(i);
-      tsquares.add(new Tsquare(random(width*2, width*3)));
-    }
-
-    //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
-    if (t.loc.x<personX+personW && t.loc.x+t.sz>personX && t.loc.y+t.sz>personY && t.loc.y<personY+personH) {
-      print("touch  ");
-      run=0;
-    }
-  }
-
 
   //RESTARTING THE GAME fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (run==0) {
@@ -142,4 +159,37 @@ void draw() {
     }
   }
 }
+
+
+
+//void keyPressed() {
+//  if (delay==originalDelay) {
+//    personY = 460;
+//    personH=normalH;
+//  }
+//  //MAKING THE PERSON JUMP OR CROUCH OR GO TO A PLATFORM FOR A CERTAIN AMOUNT OF TIME
+//  if (key == CODED) {
+//    //UP ARROW MAKES HIM JUMP
+//    if (keyCode == UP) {
+//      personY= 460-jumpAmount;
+//      personH=normalH;
+//      //DOWN ARROW MAKES HIM CROUCH
+//    } else if (keyCode == DOWN) {
+//      personY=540-crouchH;
+//      personH=crouchH;
+//    }
+//    //SPACE SENDS HIM TO A PLATFORM
+//  } else if (key==' ') {
+//    originalDelay=50;
+//    if (personY>height/2-personH) {
+//      velY=-6;
+//      personY+=velY;
+//    } else if (personY==height/2-personH) {
+//      velY=0;
+//      if (delay<=originalDelay-10) {
+//        velY=6;
+//      }
+//    }
+//  }
+//}
 

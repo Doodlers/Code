@@ -7,7 +7,7 @@ class Lop {
     sz=30;
     loc=new PVector(tempX, 540-sz);
     vel=new PVector(random(-5, -10), 0);
-    acc=new PVector(0, 0);
+    acc=new PVector(-.001, 0);
     lopImage=loadImage("LOP.png");
   }
 
