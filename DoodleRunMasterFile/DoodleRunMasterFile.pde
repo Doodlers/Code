@@ -2,7 +2,6 @@
 //ARRAY LIST OF OBJECTS
 ArrayList<Lop> lops=new ArrayList<Lop>();
 ArrayList<Tsquare> tsquares=new ArrayList<Tsquare>(); 
-ArrayList<Platform> platforms=new ArrayList<Platform>();
 Instructions text=new Instructions(); 
 Person doodle;
 
@@ -48,9 +47,6 @@ void draw() {
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
     if (addObject==100) {
-      if (platforms.size()<1) {
-        platforms.add(new Platform());
-      }
       if (num<.5) {
         //LOPS WILL THEORETICALLY ADD HALF THE TIME
         lops.add(new Lop(random(width, width*2)));
@@ -93,22 +89,14 @@ void draw() {
       //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
       doodle.touchTsquare(t);
     }
-
-
-    //MAKING THE PLATFORMS
-    for (int i=platforms.size ()-1; i>=0; i--) {
-      Platform p= platforms.get(i);
-      p.display();
-      p.move();
-
-      //REMOVING THE PLATFORM IF IT IS OFF THE SCREEN
-      if (p.off()) {
-        platforms.remove(i);
-      }
-    }
   }
 
-  //RESTARTING THE GAME G IS NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //MAKING THE PLATFORM
+  strokeWeight(9);
+  stroke(181, 41, 86);
+  line(0, height/2-30, width, height/2-30);
+
+  //RESTARTING THE GAME G
   if (run==0) {
     //CHANGING TO THE END/ RESTART SCREEN
     background(0); 
@@ -122,10 +110,6 @@ void draw() {
           Tsquare t = tsquares.get(i);
           t.loc.x=random(width, width*2);
         }
-        for (int i=platforms.size ()-1; i>=0; i--) {
-          Platform p= platforms.get(i);
-          p.loc.x=width;
-        }
         for (int i=lops.size ()-1; i>=0; i--) {
           Lop l = lops.get(i);
           l.loc.x=random(width, width*2);
@@ -138,10 +122,6 @@ void draw() {
 }
 
 void keyPressed() {
-  for (int i=platforms.size ()-1; i>=0; i--) {
-    Platform p= platforms.get(i);
-    doodle.goToPlatform(p);
-    doodle.goOffPlatform(p);
-  }
+    doodle.goToPlatform();
+    doodle.goOffPlatform();
 }
-

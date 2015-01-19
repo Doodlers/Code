@@ -14,6 +14,9 @@ class Person {
 
   //THE GROUND
   int groundH;
+  
+  //THE PLATFORM
+  int platformH;
 
   //TELLING IF HE IS ON THE PLATFORM
   boolean onPlatform;
@@ -43,6 +46,9 @@ class Person {
 
     //THE GROUND
     groundH=540;
+    
+    //THE PLATFORM
+    platformH = 269;
 
     //TELLING IF HE IS ON THE PLATFORM
     onPlatform=false;
@@ -107,20 +113,18 @@ class Person {
   }
 
   //SEND THE CHARACTER TO PLATFORM IF USER PRESSES SPACE
-  void goToPlatform(Platform someOtherPlatform) {
-    if (someOtherPlatform.loc.x<personX+personW && someOtherPlatform.loc.x+someOtherPlatform.sz.x>personX) {
+  void goToPlatform() {
       if (key==' ') {
         println("i'm going to platform now");
-        personY=someOtherPlatform.loc.y-personH;
+        personY=platformH-personH;
         delayShouldHappen=false;
         onPlatform=true;
       }
-    }
   }
 
-  void goOffPlatform(Platform someOtherPlatform) {
+  void goOffPlatform() {
     if (onPlatform==true) {
-      if (personX>=someOtherPlatform.loc.x+someOtherPlatform.sz.x) {
+      if (key=='c') {
         println("get off platform");
         personY=groundH-personH;
         delayShouldHappen=true;
