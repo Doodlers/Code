@@ -1,36 +1,19 @@
 //DECLARING/ INITIALIZING VARIABLES AND ARRAY LISTS
 //ARRAY LIST OF OBJECTS
 ArrayList<Lop> lops=new ArrayList<Lop>();
-ArrayList<Tsquare> tsquares=new ArrayList<Tsquare>();
+ArrayList<Tsquare> tsquares=new ArrayList<Tsquare>(); 
+Instructions text=new Instructions(); 
+Person doodle;
 
+//DECLARING BACKGROUND
+PImage bg;
 
 //AMOUNT TO ADD TO ARRAY LIST
 int amount=0;
+
 //RANDOM NUMBER GENERATOR FOR ADDING NEW THINGS TO ARRAY LIST 
 int addObject=0;
 float num;
-//float rand;
-//int countSinceLastLop=0;
-//int countSinceLastTsquare=0;
-
-//RECTANGLE FOR PERSON
-int personX = 50;
-int personY = 460;
-int personW=40;
-int personH=80;
-
-//VALUES FOR HOW THE PERSON JUMPS/ CROUCHES
-int velY;
-float accY;
-int jumpAmount=40;
-int normalH= 80;
-int crouchH=40;
-
-//HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
-int delay=20;
-int timeLeftUntilFall;
-int originalDelay=20;
-int platformDelay;
 
 //MAKING THE GAME START AND END
 int run=1;
@@ -38,68 +21,43 @@ int run=1;
 void setup() {
   frameRate(40);
   size(900, 600);
-  //  lops.add(new Lop(random(width, width*2)));
+  colorMode(HSB, 360, 100, 100, 100);
+  
+  doodle=new Person();
+
+  bg = loadImage("Lockers Background.JPG");
 }
 
 void draw() {
-  if (run==1) {
-    background(255);
+  background(bg);
 
+  line(0, 540, width, 540);
+
+  if (run==1) {
     //MAKING THE GROUND
     line(0, 540, width, 540);
 
     //STAND IN FOR THE PLATFORMS
     line(0, height/2, width, height/2);
 
-    //DRAWING THE RECTANGLE TO INTERACT WITH THE OBJECTS
-    rectMode(CORNER);
-    rect(personX, personY, personW, personH);
+    //DISPLAYING THE PERSON
+    doodle.display();
 
-    //MAKING THE PERSON'S LOCATION CHANGE BY THE VELOCITY
+    //MAKING THE RECTANGLE JUMP OR CROUCH OR GO TO PLATFORM FOR A CERTAIN AMOUNT OF TIME
+//    doodle.jump();
+//    doodle.crouch();
+//    doodle.goToPlatform();
 
+    //DISPLAYING AND MOVING THE TEXT INSTRUCTIONS
+    text.display();
+    text.move();
+    
+    //DISPLAYING AND MOVING CHARACTER IMAGE
+    doodle.display();
+    doodle.jump();
+    doodle.crouch();
 
-    //MAKING THE RECTANGLE JUMP OR CROUCH FOR A CERTAIN AMOUNT OF TIME
-    if (keyPressed) {
-      delay=0;
-      if (key == CODED) {
-        //UP ARROW MAKES HIM JUMP
-        if (keyCode == UP) {
-          personY= 460-jumpAmount;
-          personH=normalH;
-          //DOWN ARROW MAKES HIM CROUCH
-        } else if (keyCode == DOWN) {
-          personY=540-crouchH;
-          personH=crouchH;
-        }
-        if (delay==originalDelay) {
-          personY = 460;
-          personH=normalH;
-        }
-        //SPACE SENDS HIM TO A PLATFORM
-      } else if (key==' ') {
-        if (personY>height/2-personH) {
-          velY=-6;
-          personY+=velY;
-        } else if (personY==height/2-personH) {
-          velY=0;
-          accY=0;
-          platformDelay=50;
-          //          if (delay==platformDelay) {
-          //            if (personY<540-personH) {
-          //              velY=1;
-          //              accY=.1;
-          //            } else {
-          //            }
-          //          }
-        }
-      }
-    }
-
-    println(delay);
-    delay++;
-    timeLeftUntilFall= originalDelay-delay;
-
-    //ADDING NEW OBJECTS TO THE ARRAY LIST FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //ADDING NEW OBJECTS TO THE ARRAY LIST
     num=random(1);
     if (addObject==50) {
       if (num<.5) {
@@ -123,9 +81,7 @@ void draw() {
       }
 
       //CHECKING IF THE RECTANGLE TOUCHES THE LOP OBJECTS
-      if (l.loc.x<personX+personW && l.loc.x+l.sz>personX && l.loc.y+l.sz>personY && l.loc.y<personY+personH) {
-        run=0;
-      }
+      doodle.touchLop(l);
     }
 
 
@@ -140,13 +96,11 @@ void draw() {
       }
 
       //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
-      if (t.loc.x<personX+personW && t.loc.x+t.sz>personX && t.loc.y+t.sz>personY && t.loc.y<personY+personH) {
-        run=0;
-      }
+      doodle.touchTsquare(t);
     }
   }
 
-  //RESTARTING THE GAME fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //RESTARTING THE GAME
   if (run==0) {
     background(0); 
     textAlign(CENTER);
@@ -154,42 +108,17 @@ void draw() {
     text("New game? Press g", width/2, height/2);
     if (keyPressed) {
       if (key=='g') {
+        for (int i=tsquares.size ()-1; i>=0; i--) {
+          Tsquare t = tsquares.get(i);
+          t.loc.x=random(width, width*2);
+        }
+        for (int i=lops.size ()-1; i>=0; i--) {
+          Lop l = lops.get(i);
+          l.loc.x=random(width, width*2);
+        }
         run=1;
       }
     }
   }
 }
-
-
-
-//void keyPressed() {
-//  if (delay==originalDelay) {
-//    personY = 460;
-//    personH=normalH;
-//  }
-//  //MAKING THE PERSON JUMP OR CROUCH OR GO TO A PLATFORM FOR A CERTAIN AMOUNT OF TIME
-//  if (key == CODED) {
-//    //UP ARROW MAKES HIM JUMP
-//    if (keyCode == UP) {
-//      personY= 460-jumpAmount;
-//      personH=normalH;
-//      //DOWN ARROW MAKES HIM CROUCH
-//    } else if (keyCode == DOWN) {
-//      personY=540-crouchH;
-//      personH=crouchH;
-//    }
-//    //SPACE SENDS HIM TO A PLATFORM
-//  } else if (key==' ') {
-//    originalDelay=50;
-//    if (personY>height/2-personH) {
-//      velY=-6;
-//      personY+=velY;
-//    } else if (personY==height/2-personH) {
-//      velY=0;
-//      if (delay<=originalDelay-10) {
-//        velY=6;
-//      }
-//    }
-//  }
-//}
 
