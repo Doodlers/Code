@@ -31,22 +31,12 @@ void setup() {
 void draw() {
   background(bg);
 
-  line(0, 540, width, 540);
-
   if (run==1) {
     //MAKING THE GROUND
     line(0, 540, width, 540);
 
     //STAND IN FOR THE PLATFORMS
     line(0, height/2, width, height/2);
-
-    //DISPLAYING THE PERSON
-    doodle.display();
-
-    //MAKING THE RECTANGLE JUMP OR CROUCH OR GO TO PLATFORM FOR A CERTAIN AMOUNT OF TIME
-//    doodle.jump();
-//    doodle.crouch();
-//    doodle.goToPlatform();
 
     //DISPLAYING AND MOVING THE TEXT INSTRUCTIONS
     text.display();
@@ -100,7 +90,7 @@ void draw() {
     }
   }
 
-  //RESTARTING THE GAME
+  //RESTARTING THE GAME G IS NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (run==0) {
     background(0); 
     textAlign(CENTER);

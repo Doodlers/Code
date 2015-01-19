@@ -51,29 +51,10 @@ class Person {
   }
 
   void display() {
-    //DRAWING THE RECTANGLE TO INTERACT WITH THE OBJECTS
-    //    rectMode(CORNER);
-    //    rect(personX, personY, personW, personH);
-    if (imagesRunning == 1) {
-      image(p1, personX, personY, personW, personH);
-      imagesRunning=2;
-    }
-    if (imagesRunning == 2) {
-      image(p2, personX, personY, personW, personH);
-      imagesRunning=3;
-    }
-    if (imagesRunning == 3) {
-      image(p3, personX, personY, personW, personH);
-      imagesRunning=4;
-    }
-    if (imagesRunning == 4) {
-      image(p4, personX, personY, personW, personH);
-    }
-    if (imagesRunning > 4) {
-      imagesRunning = 1;
-    }
+    //DRAWING THE IMAGE TO INTERACT WITH THE OBJECTS
+    image(p1, personX, personY, personW, personH);
   }
-
+  
   void jump() {
     if (keyPressed) {
       delay=0;
