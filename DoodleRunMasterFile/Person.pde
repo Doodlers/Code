@@ -31,7 +31,7 @@ class Person {
     p2 = loadImage("person2.png");
     p3 = loadImage("person3.png");
     p4 = loadImage("person4.png");
-    p5 = loadImage("Drop.png");
+    p5 = loadImage("newCrouch.png");
     imagesRunning=1;
 
     //IMAGES FOR PERSON
@@ -71,7 +71,13 @@ class Person {
     if (imagesRunning == 4) {
       image(p4, personX, personY, personW, personH);
     }
-    imagesRunning++;
+    if (imagesRunning>=1 && imagesRunning<=4) {
+      imagesRunning++;
+    } else if (imagesRunning==0) {
+      personH=crouchH;
+      personY=groundH-personH;
+      image(p5, personX, personY, personW, personH);
+    }
     if (imagesRunning > 4) {
       imagesRunning = 1;
     }
@@ -87,14 +93,10 @@ class Person {
           personH=normalH;
         }
         if (keyCode == DOWN) {
-          println(5);
-          if (delay<originalDelay) {
-            println("don't uncrouch yet");
-            personH=crouchH;
-            personY=groundH-personH;
-            image(p5, personX, personY, personW, personH);
-            imagesRunning=0;
-          }
+          imagesRunning=0;
+          //          personH=crouchH;
+          //          personY=groundH-personH;
+          //          image(p5, personX, personY, personW, personH);
         }
       }
     }
@@ -102,6 +104,7 @@ class Person {
     if (delay==originalDelay) {
       personH=normalH;
       personY = groundH-personH;
+      imagesRunning=1;
     }
   }
 
@@ -136,7 +139,7 @@ class Person {
 
   void touchTsquare(Tsquare someOtherTsquare) {
     //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
-    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y>personY && someOtherTsquare.loc.y+someOtherTsquare.sz<personY+personH) {
+    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+personH) {
       run=0;
     }
     //    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+40) {

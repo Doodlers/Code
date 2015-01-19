@@ -51,7 +51,7 @@ void draw() {
 
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
-    if (addObject==50) {
+    if (addObject==100) {
       if (num<.5) {
         //LOPS WILL THEORETICALLY ADD HALF THE TIME
         lops.add(new Lop(random(width, width*2)));
