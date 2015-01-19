@@ -3,9 +3,9 @@ class Platform {
   boolean off;
 
   Platform() {
-    loc = new PVector(width, (height/2)-34);
+    loc = new PVector(width*2, (height/2)-34);
     vel = new PVector(-5, 0);
-    sz = new PVector(random(300,600), 10);
+    sz = new PVector(width, 10);
     acc = new PVector(0, 0);
   }
 

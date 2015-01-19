@@ -122,10 +122,15 @@ void draw() {
           Tsquare t = tsquares.get(i);
           t.loc.x=random(width, width*2);
         }
+        for (int i=platforms.size ()-1; i>=0; i--) {
+          Platform p= platforms.get(i);
+          p.loc.x=width;
+        }
         for (int i=lops.size ()-1; i>=0; i--) {
           Lop l = lops.get(i);
           l.loc.x=random(width, width*2);
         }
+        text.txtlocx=width;
         run=1;
       }
     }
@@ -135,7 +140,6 @@ void draw() {
 void keyPressed() {
   for (int i=platforms.size ()-1; i>=0; i--) {
     Platform p= platforms.get(i);
-    //HAVING THE CHARACTER GO TO THE PLATFORM
     doodle.goToPlatform(p);
     doodle.goOffPlatform(p);
   }

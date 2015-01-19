@@ -15,22 +15,22 @@ class Person {
   //THE GROUND
   int groundH;
 
+  //TELLING IF HE IS ON THE PLATFORM
+  boolean onPlatform;
+
   //HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
   int delay;
   int originalDelay;
   boolean delayShouldHappen;
 
-  //TELLING IF HE IS ON THE PLATFORM
-  boolean onPlatform;
-
   //IMAGE LOOP FOR PERSON
-  int imagesRunning;
-  PImage p1, p2, p3, p4, p5;
+  float imagesRunning;
+  PImage p1, p2, p3, p4;
 
   Person() {
     //LOCATION FOR PERSON
     personX = 50;
-    personY = 470;
+    personY = 460;
     personW=40;
     personH=80;
 
@@ -44,49 +44,37 @@ class Person {
     //THE GROUND
     groundH=540;
 
+    //TELLING IF HE IS ON THE PLATFORM
+    onPlatform=false;
+
     //HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
     delay=0;
     originalDelay=20;
     delayShouldHappen=true;
 
-    //TELLING IF HE IS ON THE PLATFORM
-    onPlatform=false;
-
     //IMAGE LOOP FOR PERSON
-    p1 = loadImage("person1.png");
-    p2 = loadImage("person2.png");
-    p3 = loadImage("person3.png");
-    p4 = loadImage("person4.png");
-    p5 = loadImage("newCrouch.png");
+    p1 = loadImage("person1GOOD.png");
+    p2 = loadImage("person2GOOD.png");
+    p3 = loadImage("person3GOOD.png");
+    p4 = loadImage("person4GOOD.png");
     imagesRunning=1;
   }
 
   void display() {
-
-
-    println(onPlatform);
-
-
     //DRAWING THE IMAGE TO INTERACT WITH THE OBJECTS
-    if (imagesRunning == 1) {
+    if (imagesRunning == 1 || imagesRunning == 1.5 ) {
       image(p1, personX, personY, personW, personH);
     }
-    if (imagesRunning == 2) {
+    if (imagesRunning == 2 || imagesRunning == 2.5 ) {
       image(p2, personX, personY, personW, personH);
     }
-    if (imagesRunning == 3) {
+    if (imagesRunning == 3 || imagesRunning == 3.5 ) {
       image(p3, personX, personY, personW, personH);
     }
-    if (imagesRunning == 4) {
+    if (imagesRunning == 4 || imagesRunning == 4.5 ) {
       image(p4, personX, personY, personW, personH);
     }
-    if (imagesRunning>=1 && imagesRunning<=4) {
-      imagesRunning++;
-    } else if (imagesRunning==0) {
-      personH=crouchH;
-      personY=groundH-personH;
-      image(p5, personX, personY, personW, personH);
-    }
+    imagesRunning+=.5;
     if (imagesRunning > 4) {
       imagesRunning = 1;
     }
@@ -104,7 +92,8 @@ class Person {
           }
           //DOWN ARROW MAKES HIM CROUCH
           if (keyCode == DOWN) {
-            imagesRunning=0;
+            personH=crouchH;
+            personY=groundH-personH;
           }
         }
       }
@@ -113,37 +102,32 @@ class Person {
       if (delay==originalDelay) {
         personH=normalH;
         personY = groundH-personH;
-        imagesRunning=1;
       }
     }
   }
 
-
   //SEND THE CHARACTER TO PLATFORM IF USER PRESSES SPACE
   void goToPlatform(Platform someOtherPlatform) {
-    if (key==' ') {
-      if (someOtherPlatform.loc.x<personX+personW && someOtherPlatform.loc.x+someOtherPlatform.sz.x>personX) {
+    if (someOtherPlatform.loc.x<personX+personW && someOtherPlatform.loc.x+someOtherPlatform.sz.x>personX) {
+      if (key==' ') {
+        println("i'm going to platform now");
         personY=someOtherPlatform.loc.y-personH;
         delayShouldHappen=false;
         onPlatform=true;
-      } 
-//      else if (someOtherPlatform.loc.x>personX+personW || someOtherPlatform.loc.x+someOtherPlatform.sz.x<personX) {
-//        personY=groundH-personH;
-//        delayShouldHappen=true;
-//        onPlatform=false;
-//      }
+      }
     }
   }
 
-  //TAKING CHARACTER OFF PLATFORM ONCE THE PLATFORM ENDS
   void goOffPlatform(Platform someOtherPlatform) {
-    if (someOtherPlatform.loc.x>personX+personW || someOtherPlatform.loc.x+someOtherPlatform.sz.x<personX) {
-      personY=groundH-personH;
-      delayShouldHappen=true;
-      onPlatform=false;
+    if (onPlatform==true) {
+      if (personX>=someOtherPlatform.loc.x+someOtherPlatform.sz.x) {
+        println("get off platform");
+        personY=groundH-personH;
+        delayShouldHappen=true;
+        onPlatform=false;
+      }
     }
   }
-
 
   void touchLop(Lop someOtherLop) {
     //CHECKING IF THE CHARACTER TOUCHES THE LOP OBJECTS
