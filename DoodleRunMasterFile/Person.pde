@@ -20,6 +20,9 @@ class Person {
   int originalDelay;
   boolean delayShouldHappen;
 
+  //TELLING IF HE IS ON THE PLATFORM
+  boolean onPlatform;
+
   //IMAGE LOOP FOR PERSON
   int imagesRunning;
   PImage p1, p2, p3, p4, p5;
@@ -46,6 +49,9 @@ class Person {
     originalDelay=20;
     delayShouldHappen=true;
 
+    //TELLING IF HE IS ON THE PLATFORM
+    onPlatform=false;
+
     //IMAGE LOOP FOR PERSON
     p1 = loadImage("person1.png");
     p2 = loadImage("person2.png");
@@ -56,6 +62,11 @@ class Person {
   }
 
   void display() {
+
+
+    println(onPlatform);
+
+
     //DRAWING THE IMAGE TO INTERACT WITH THE OBJECTS
     if (imagesRunning == 1) {
       image(p1, personX, personY, personW, personH);
@@ -83,13 +94,12 @@ class Person {
 
   void jumpAndCrouch() {
     if (delayShouldHappen) {
-
       if (keyPressed) {
         delay=0;
         if (key == CODED) {
           //UP ARROW MAKES HIM JUMP
           if (keyCode == UP) {
-            personY= 460-jumpAmount;
+            personY= groundH-personH-jumpAmount;
             personH=normalH;
           }
           //DOWN ARROW MAKES HIM CROUCH
@@ -112,10 +122,25 @@ class Person {
   //SEND THE CHARACTER TO PLATFORM IF USER PRESSES SPACE
   void goToPlatform(Platform someOtherPlatform) {
     if (key==' ') {
-      if (someOtherPlatform.loc.x<personX && someOtherPlatform.loc.x+someOtherPlatform.sz.x>personX+personW) {
+      if (someOtherPlatform.loc.x<personX+personW && someOtherPlatform.loc.x+someOtherPlatform.sz.x>personX) {
         personY=someOtherPlatform.loc.y-personH;
         delayShouldHappen=false;
-      }
+        onPlatform=true;
+      } 
+//      else if (someOtherPlatform.loc.x>personX+personW || someOtherPlatform.loc.x+someOtherPlatform.sz.x<personX) {
+//        personY=groundH-personH;
+//        delayShouldHappen=true;
+//        onPlatform=false;
+//      }
+    }
+  }
+
+  //TAKING CHARACTER OFF PLATFORM ONCE THE PLATFORM ENDS
+  void goOffPlatform(Platform someOtherPlatform) {
+    if (someOtherPlatform.loc.x>personX+personW || someOtherPlatform.loc.x+someOtherPlatform.sz.x<personX) {
+      personY=groundH-personH;
+      delayShouldHappen=true;
+      onPlatform=false;
     }
   }
 

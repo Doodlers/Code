@@ -45,18 +45,19 @@ void draw() {
     doodle.display();
     doodle.jumpAndCrouch();
 
-
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
     if (addObject==100) {
-      platforms.add(new Platform());
+      if (platforms.size()<1) {
+        platforms.add(new Platform());
+      }
       if (num<.5) {
         //LOPS WILL THEORETICALLY ADD HALF THE TIME
-        //        lops.add(new Lop(random(width, width*2)));
+        lops.add(new Lop(random(width, width*2)));
         addObject=0;
       } else if (num>.5) {
         //TSQUARES WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
-        //        tsquares.add(new Tsquare(random(width, width*2)));
+        tsquares.add(new Tsquare(random(width, width*2)));
         addObject=0;
       }
     }
@@ -136,6 +137,7 @@ void keyPressed() {
     Platform p= platforms.get(i);
     //HAVING THE CHARACTER GO TO THE PLATFORM
     doodle.goToPlatform(p);
+    doodle.goOffPlatform(p);
   }
 }
 
