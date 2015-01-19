@@ -12,6 +12,9 @@ class Person {
   int normalH;
   int crouchH;
 
+  //THE GROUND
+  int groundH;
+
   //HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
   int delay;
   int originalDelay;
@@ -31,7 +34,7 @@ class Person {
     p5 = loadImage("Drop.png");
     imagesRunning=1;
 
-    //RECTANGLE FOR PERSON
+    //IMAGES FOR PERSON
     personX = 50;
     personY = 460;
     personW=40;
@@ -44,6 +47,9 @@ class Person {
     normalH= 80;
     crouchH=40;
 
+    //THE GROUND
+    groundH=540;
+
     //HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
     delay=0;
     originalDelay=40;
@@ -52,10 +58,26 @@ class Person {
 
   void display() {
     //DRAWING THE IMAGE TO INTERACT WITH THE OBJECTS
-    image(p1, personX, personY, personW, personH);
+    //    image(p1, personX, personY, personW, personH);
+    if (imagesRunning == 1) {
+      image(p1, personX, personY, personW, personH);
+    }
+    if (imagesRunning == 2) {
+      image(p2, personX, personY, personW, personH);
+    }
+    if (imagesRunning == 3) {
+      image(p3, personX, personY, personW, personH);
+    }
+    if (imagesRunning == 4) {
+      image(p4, personX, personY, personW, personH);
+    }
+    imagesRunning++;
+    if (imagesRunning > 4) {
+      imagesRunning = 1;
+    }
   }
-  
-  void jump() {
+
+  void jumpAndCrouch() {
     if (keyPressed) {
       delay=0;
       if (key == CODED) {
@@ -64,32 +86,27 @@ class Person {
           personY= 460-jumpAmount;
           personH=normalH;
         }
-      }
-    }
-    delay++;
-    if (delay==originalDelay) {
-      personY = 460;
-      personH=normalH;
-    }
-  }
-
-  void crouch() {
-    if (keyPressed) {
-      delay=0;
-      if (key == CODED) {
-        //DOWN ARROW MAKES HIM CROUCH
         if (keyCode == DOWN) {
-          personY=540-crouchH;
-          personH=crouchH;
+          println(5);
+          if (delay<originalDelay) {
+            println("don't uncrouch yet");
+            personH=crouchH;
+            personY=groundH-personH;
+            image(p5, personX, personY, personW, personH);
+            imagesRunning=0;
+          }
         }
       }
-    } 
+    }
     delay++;
     if (delay==originalDelay) {
-      imagesRunning=1;
+      personH=normalH;
+      personY = groundH-personH;
     }
   }
 
+
+  //NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   void goToPlatform() {
     personY+=velY;
     platformDelay=0;
@@ -119,9 +136,12 @@ class Person {
 
   void touchTsquare(Tsquare someOtherTsquare) {
     //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
-    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+personH) {
+    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y>personY && someOtherTsquare.loc.y+someOtherTsquare.sz<personY+personH) {
       run=0;
     }
+    //    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+40) {
+    //      run=0;
+    //    }
   }
 }
 

@@ -22,15 +22,18 @@ void setup() {
   frameRate(40);
   size(900, 600);
   colorMode(HSB, 360, 100, 100, 100);
-  
+
+  //INITIALIZING THE PERSON
   doodle=new Person();
 
+  //INITIALIZING THE BACKGROUND
   bg = loadImage("Lockers Background.JPG");
 }
 
 void draw() {
   background(bg);
 
+  //IF THE RUN=1 (WHICH MEANS THE GAME IS STARTED/ CAN CONTINUE)
   if (run==1) {
     //MAKING THE GROUND
     line(0, 540, width, 540);
@@ -41,19 +44,20 @@ void draw() {
     //DISPLAYING AND MOVING THE TEXT INSTRUCTIONS
     text.display();
     text.move();
-    
-    //DISPLAYING AND MOVING CHARACTER IMAGE
-    doodle.display();
-    doodle.jump();
-    doodle.crouch();
 
-    //ADDING NEW OBJECTS TO THE ARRAY LIST
+    //DISPLAYING, JUMPING, AND CROUCHING CHARACTER IMAGE
+    doodle.display();
+    doodle.jumpAndCrouch();
+
+    //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
     if (addObject==50) {
       if (num<.5) {
+        //LOPS WILL THEORETICALLY ADD HALF THE TIME
         lops.add(new Lop(random(width, width*2)));
         addObject=0;
       } else if (num>.5) {
+        //TSQUARES WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
         tsquares.add(new Tsquare(random(width, width*2)));
         addObject=0;
       }
@@ -66,6 +70,7 @@ void draw() {
       l.move();
       l.display();
 
+      //REMOVING THE LOP IF IT IS OFF THE SCREEN
       if (l.off()) {
         lops.remove(i);
       }
@@ -81,6 +86,7 @@ void draw() {
       t.move();
       t.display();
 
+      //REMOVING THE TSQUARE IF IT IS OFF THE SCREEN
       if (t.off()) {
         tsquares.remove(i);
       }
@@ -90,14 +96,16 @@ void draw() {
     }
   }
 
-  //RESTARTING THE GAME G IS NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //RESTARTING THE GAME G IS NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (run==0) {
+    //CHANGING TO THE END/ RESTART SCREEN
     background(0); 
     textAlign(CENTER);
     textSize(50);
     text("New game? Press g", width/2, height/2);
     if (keyPressed) {
       if (key=='g') {
+        //IF G IS PRESSED, RESET THE LOCATIONS OF THE LOPS AND TSQUARES AND GO BACK TO THE GAME SCREEN
         for (int i=tsquares.size ()-1; i>=0; i--) {
           Tsquare t = tsquares.get(i);
           t.loc.x=random(width, width*2);
