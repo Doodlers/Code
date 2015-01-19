@@ -1,7 +1,8 @@
-//DECLARING/ INITIALIZING VARIABLES AND ARRAY LISTS
+//DECLARING / INITIALIZING VARIABLES AND ARRAY LISTS
 //ARRAY LIST OF OBJECTS
 ArrayList<Lop> lops=new ArrayList<Lop>();
 ArrayList<Tsquare> tsquares=new ArrayList<Tsquare>(); 
+ArrayList<Book> books=new ArrayList<Book>(); 
 Instructions text=new Instructions(); 
 Person doodle;
 
@@ -32,6 +33,7 @@ void setup() {
 
 void draw() {
   background(bg);
+  println(num);
 
   //IF THE RUN=1 (WHICH MEANS THE GAME IS STARTED/ CAN CONTINUE)
   if (run==1) {
@@ -46,14 +48,24 @@ void draw() {
 
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
-    if (addObject==100) {
-      if (num<.5) {
+    
+    if (addObject==50) {
+      if (num < .33333) {
+
         //LOPS WILL THEORETICALLY ADD HALF THE TIME
         lops.add(new Lop(random(width, width*2)));
         addObject=0;
-      } else if (num>.5) {
+        
+      } else if (num > .33333 && num < .666666) {
+
         //TSQUARES WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
         tsquares.add(new Tsquare(random(width, width*2)));
+        addObject=0;
+        
+      } else if (num > .666666 && num < 1) {
+        
+        //BOOKS WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
+        books.add(new Book(random(width, width*2)));
         addObject=0;
       }
     }
@@ -74,7 +86,6 @@ void draw() {
       doodle.touchLop(l);
     }
 
-
     //USING METHODS FOR THE TSQUARE CLASS
     for (int i=tsquares.size ()-1; i>=0; i--) {
       Tsquare t = tsquares.get(i);
@@ -88,6 +99,21 @@ void draw() {
 
       //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
       doodle.touchTsquare(t);
+    }
+    
+    //USING METHODS FOR THE BOOK CLASS
+    for (int i=books.size ()-1; i>=0; i--) {
+      Book b = books.get(i);
+      b.move();
+      b.display();
+
+      //REMOVING THE BOOK IF IT IS OFF THE SCREEN
+      if (b.off()) {
+        books.remove(i);
+      }
+
+      //CHECKING IF THE RECTANGLE TOUCHES THE BOOK OBJECTS
+      doodle.touchBook(b);
     }
   }
 
@@ -122,6 +148,7 @@ void draw() {
 }
 
 void keyPressed() {
-    doodle.goToPlatform();
-    doodle.goOffPlatform();
+  doodle.goToPlatform();
+  doodle.goOffPlatform();
 }
+

@@ -1,18 +1,18 @@
-class Lop {
+class Book {
   PVector loc, vel, acc; 
   float sz;
-  PImage lopImage;
+  PImage bookImage;
 
-  Lop(float tempX) {
+  Book(float tempX) {
     sz=30;
-    loc=new PVector(tempX, 540-sz);
-    vel=new PVector(random(-4, -5), 0);
+    loc=new PVector(tempX, 269-sz);
+    vel=new PVector(random(-3, -4), 0);
     acc=new PVector(-.001, 0);
-    lopImage=loadImage("LOP.png");
+    bookImage=loadImage("Books.png");
   }
 
   void display() {
-    image(lopImage, loc.x, loc.y, sz, sz);
+    image(bookImage, loc.x, loc.y, sz, sz);
   }
 
   void move() {

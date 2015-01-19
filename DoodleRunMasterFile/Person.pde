@@ -14,7 +14,7 @@ class Person {
 
   //THE GROUND
   int groundH;
-  
+
   //THE PLATFORM
   int platformH;
 
@@ -46,7 +46,7 @@ class Person {
 
     //THE GROUND
     groundH=540;
-    
+
     //THE PLATFORM
     platformH = 269;
 
@@ -114,12 +114,12 @@ class Person {
 
   //SEND THE CHARACTER TO PLATFORM IF USER PRESSES SPACE
   void goToPlatform() {
-      if (key==' ') {
-        println("i'm going to platform now");
-        personY=platformH-personH;
-        delayShouldHappen=false;
-        onPlatform=true;
-      }
+    if (key==' ') {
+      println("i'm going to platform now");
+      personY=platformH-personH;
+      delayShouldHappen=false;
+      onPlatform=true;
+    }
   }
 
   void goOffPlatform() {
@@ -143,6 +143,13 @@ class Person {
   void touchTsquare(Tsquare someOtherTsquare) {
     //CHECKING IF THE CHARACTER TOUCHES THE TSQUARE OBJECTS
     if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+personH) {
+      run=0;
+    }
+  }
+
+  void touchBook(Book someOtherBook) {
+    //CHECKING IF THE CHARACTER TOUCHES THE BOOK OBJECTS
+    if (someOtherBook.loc.x<personX+personW && someOtherBook.loc.x+someOtherBook.sz>personX && someOtherBook.loc.y+someOtherBook.sz>personY && someOtherBook.loc.y<personY+personH) {
       run=0;
     }
   }
