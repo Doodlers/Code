@@ -1,9 +1,9 @@
 class Person {
   //RECTANGLE FOR PERSON
   int personX;
-  int personY;
+  float personY;
   int personW;
-  int personH;
+  float personH;
 
   //VALUES FOR HOW THE PERSON JUMPS/ CROUCHES
   int velY;
@@ -36,7 +36,7 @@ class Person {
 
     //IMAGES FOR PERSON
     personX = 50;
-    personY = 460;
+    personY = 470;
     personW=40;
     personH=80;
 
@@ -52,7 +52,7 @@ class Person {
 
     //HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
     delay=0;
-    originalDelay=40;
+    originalDelay=20;
     platformDelay=50;
   }
 
@@ -94,9 +94,6 @@ class Person {
         }
         if (keyCode == DOWN) {
           imagesRunning=0;
-          //          personH=crouchH;
-          //          personY=groundH-personH;
-          //          image(p5, personX, personY, personW, personH);
         }
       }
     }
@@ -110,25 +107,14 @@ class Person {
 
 
   //NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  void goToPlatform() {
-    personY+=velY;
-    platformDelay=0;
-    if (keyPressed) {
-      if (key==' ') {
-        if (personY>height/2-personH) {
-          velY=-6;
-        } else if (personY==height/2-personH) {
-          velY=0;
-          platformOriginalDelay=50;
-        }
-        platformDelay++;
-        if (platformDelay==platformOriginalDelay) {
-          velY=6;
-        }
+  void goToPlatform(Platform someOtherPlatform) {
+    if (key==' ') {
+      if (someOtherPlatform.loc.x<personX && someOtherPlatform.loc.x+someOtherPlatform.sz.x>personX+personW) {
+        personY=someOtherPlatform.loc.y-personH;
       }
     }
-    println(platformDelay);
   }
+
 
   void touchLop(Lop someOtherLop) {
     //CHECKING IF THE RECTANGLE TOUCHES THE LOP OBJECTS
@@ -142,9 +128,6 @@ class Person {
     if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+personH) {
       run=0;
     }
-    //    if (someOtherTsquare.loc.x<personX+personW && someOtherTsquare.loc.x+someOtherTsquare.sz>personX && someOtherTsquare.loc.y+someOtherTsquare.sz>personY && someOtherTsquare.loc.y<personY+40) {
-    //      run=0;
-    //    }
   }
 }
 

@@ -2,6 +2,7 @@
 //ARRAY LIST OF OBJECTS
 ArrayList<Lop> lops=new ArrayList<Lop>();
 ArrayList<Tsquare> tsquares=new ArrayList<Tsquare>(); 
+ArrayList<Platform> platforms=new ArrayList<Platform>();
 Instructions text=new Instructions(); 
 Person doodle;
 
@@ -35,30 +36,27 @@ void draw() {
 
   //IF THE RUN=1 (WHICH MEANS THE GAME IS STARTED/ CAN CONTINUE)
   if (run==1) {
-    //MAKING THE GROUND
-    line(0, 540, width, 540);
-
-    //STAND IN FOR THE PLATFORMS
-    line(0, height/2, width, height/2);
 
     //DISPLAYING AND MOVING THE TEXT INSTRUCTIONS
     text.display();
     text.move();
 
-    //DISPLAYING, JUMPING, AND CROUCHING CHARACTER IMAGE
+    //DISPLAYING, JUMPING, CROUCHING CHARACTER IMAGE
     doodle.display();
     doodle.jumpAndCrouch();
+
 
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
     if (addObject==100) {
+      platforms.add(new Platform());
       if (num<.5) {
         //LOPS WILL THEORETICALLY ADD HALF THE TIME
-        lops.add(new Lop(random(width, width*2)));
+        //        lops.add(new Lop(random(width, width*2)));
         addObject=0;
       } else if (num>.5) {
         //TSQUARES WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
-        tsquares.add(new Tsquare(random(width, width*2)));
+        //        tsquares.add(new Tsquare(random(width, width*2)));
         addObject=0;
       }
     }
@@ -94,6 +92,19 @@ void draw() {
       //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
       doodle.touchTsquare(t);
     }
+
+
+    //MAKING THE PLATFORMS
+    for (int i=platforms.size ()-1; i>=0; i--) {
+      Platform p= platforms.get(i);
+      p.display();
+      p.move();
+
+      //REMOVING THE PLATFORM IF IT IS OFF THE SCREEN
+      if (p.off()) {
+        platforms.remove(i);
+      }
+    }
   }
 
   //RESTARTING THE GAME G IS NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -117,6 +128,14 @@ void draw() {
         run=1;
       }
     }
+  }
+}
+
+void keyPressed() {
+  for (int i=platforms.size ()-1; i>=0; i--) {
+    Platform p= platforms.get(i);
+    //HAVING THE CHARACTER GO TO THE PLATFORM
+    doodle.goToPlatform(p);
   }
 }
 
