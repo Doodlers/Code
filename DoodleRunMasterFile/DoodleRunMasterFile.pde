@@ -48,23 +48,17 @@ void draw() {
 
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
-    
-    if (addObject==50) {
+    if (addObject==100) {
       if (num < .33333) {
-
-        //LOPS WILL THEORETICALLY ADD HALF THE TIME
+        //LOPS WILL THEORETICALLY ADD ONE THIRD THE TIME
         lops.add(new Lop(random(width, width*2)));
         addObject=0;
-        
       } else if (num > .33333 && num < .666666) {
-
-        //TSQUARES WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
+        //TSQUARES WILL THEORETICALLY ADD ONE THIRD OF THE TIME
         tsquares.add(new Tsquare(random(width, width*2)));
         addObject=0;
-        
       } else if (num > .666666 && num < 1) {
-        
-        //BOOKS WILL THEORETICALLY ADD THE OTHER HALF OF THE TIME
+        //BOOKS WILL THEORETICALLY ADD ONE THIRD OF THE TIME
         books.add(new Book(random(width, width*2)));
         addObject=0;
       }
@@ -100,7 +94,8 @@ void draw() {
       //CHECKING IF THE RECTANGLE TOUCHES THE TSQUARE OBJECTS
       doodle.touchTsquare(t);
     }
-    
+
+
     //USING METHODS FOR THE BOOK CLASS
     for (int i=books.size ()-1; i>=0; i--) {
       Book b = books.get(i);
@@ -115,14 +110,15 @@ void draw() {
       //CHECKING IF THE RECTANGLE TOUCHES THE BOOK OBJECTS
       doodle.touchBook(b);
     }
+
+
+    //MAKING THE PLATFORM
+    strokeWeight(9);
+    stroke(181, 41, 86);
+    line(0, height/2-30, width, height/2-30);
   }
 
-  //MAKING THE PLATFORM
-  strokeWeight(9);
-  stroke(181, 41, 86);
-  line(0, height/2-30, width, height/2-30);
-
-  //RESTARTING THE GAME G
+  //RESTARTING THE GAME
   if (run==0) {
     //CHANGING TO THE END/ RESTART SCREEN
     background(0); 
@@ -131,7 +127,7 @@ void draw() {
     text("New game? Press g", width/2, height/2);
     if (keyPressed) {
       if (key=='g') {
-        //IF G IS PRESSED, RESET THE LOCATIONS OF THE LOPS AND TSQUARES AND GO BACK TO THE GAME SCREEN
+        //IF G IS PRESSED, RESET THE LOCATIONS OF THE LOPS, TSQUARES, BOOKS, AND TEXT AND GO BACK TO THE GAME SCREEN
         for (int i=tsquares.size ()-1; i>=0; i--) {
           Tsquare t = tsquares.get(i);
           t.loc.x=random(width, width*2);
@@ -139,6 +135,10 @@ void draw() {
         for (int i=lops.size ()-1; i>=0; i--) {
           Lop l = lops.get(i);
           l.loc.x=random(width, width*2);
+        }
+        for (int i=books.size ()-1; i>=0; i--) {
+          Book b = books.get(i);
+          b.loc.x=random(width, width*2);
         }
         text.txtlocx=width;
         run=1;

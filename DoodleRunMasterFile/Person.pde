@@ -92,7 +92,7 @@ class Person {
         delay=0;
         if (key == CODED) {
           //UP ARROW MAKES HIM JUMP
-          if (keyCode == UP) {
+          if (keyCode==UP) {
             personY= groundH-personH-jumpAmount;
             personH=normalH;
           }
@@ -103,12 +103,12 @@ class Person {
           }
         }
       }
-      delay++;
-      //IF THE DELAY REACHES A CERTAIN NUMBER, RESET THE PERSON
-      if (delay==originalDelay) {
-        personH=normalH;
-        personY = groundH-personH;
-      }
+    }
+    delay++;
+    //IF THE DELAY REACHES A CERTAIN NUMBER, RESET THE PERSON
+    if (delay==originalDelay) {
+      personH=normalH;
+      personY = groundH-personH;
     }
   }
 
@@ -122,6 +122,7 @@ class Person {
     }
   }
 
+  //SEND THE CHARACTER OFF THE PLATFORM IF THE USER PRESSES C
   void goOffPlatform() {
     if (onPlatform==true) {
       if (key=='c') {
