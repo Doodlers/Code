@@ -48,7 +48,7 @@ void draw() {
 
     //ADDING NEW OBJECTS TO THE ARRAY LIST AFTER A SET NUMBER OF FRAMES
     num=random(1);
-    if (addObject==100) {
+    if (addObject==50) {
       if (num < .33333) {
         //LOPS WILL THEORETICALLY ADD ONE THIRD THE TIME
         lops.add(new Lop(random(width, width*2)));
@@ -110,13 +110,14 @@ void draw() {
       //CHECKING IF THE RECTANGLE TOUCHES THE BOOK OBJECTS
       doodle.touchBook(b);
     }
-
-
-    //MAKING THE PLATFORM
-    strokeWeight(9);
-    stroke(181, 41, 86);
-    line(0, height/2-30, width, height/2-30);
   }
+
+
+  //MAKING THE PLATFORM
+  strokeWeight(9);
+  stroke(181, 41, 86);
+  line(0, height/2-30, width, height/2-30);
+
 
   //RESTARTING THE GAME
   if (run==0) {
