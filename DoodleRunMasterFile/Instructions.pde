@@ -1,15 +1,21 @@
+//INSTRUCTIONS CLASS
+
 class Instructions {
+  
+  //DECLARING LOCATION AND VELOCITY
   float txtlocx, txtlocy;
-  float txtvelx;
-  float txtvely;
+  float txtvelx, txtvely;
 
   Instructions() {
+    
+    //INITIALIZING VELOCITIES AND LOCATIONS
     txtvelx = -1;
     txtvely = 0;
     txtlocx = 900;
     txtlocy = 100;
   }
 
+//DISPLAYING INSTRUCTIONS
   void display() {
     textAlign(CENTER);
     textSize(20);
@@ -20,6 +26,7 @@ class Instructions {
     text("Press C to jump off platform back to ground", txtlocx, txtlocy+60);
   }
 
+//MOVING INSTRUCTIONS
   void move() {
     txtlocx += txtvelx;
     txtlocy += txtvely;
