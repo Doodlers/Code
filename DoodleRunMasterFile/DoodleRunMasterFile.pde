@@ -168,6 +168,7 @@ void draw() {
 }
 
 void keyPressed() {
+  //MOVING CHARACTER IMAGE
   doodle.goToPlatform();
   doodle.goOffPlatform();
 }
