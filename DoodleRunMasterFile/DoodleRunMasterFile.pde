@@ -131,13 +131,14 @@ void draw() {
 
   //RESTARTING THE GAME
   if (run == 0) {
-
+    score+=0;
     //CHANGING TO THE END / RESTART SCREEN
     background(0); 
     textAlign(CENTER);
     textSize(50);
     textAlign(CENTER);
     text("New game? Press g", width/2, height/2);
+    text("Score: " + score,width/2,height/3);
     if (keyPressed) {
       if (key == 'g') {
         //IF G IS PRESSED, RESET THE LOCATIONS OF THE LOPS, TSQUARES, BOOKS, AND TEXT AND GO BACK TO THE GAME SCREEN
