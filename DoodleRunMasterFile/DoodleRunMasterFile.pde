@@ -23,6 +23,9 @@ int run = 1;
 //SCORE
 int score;
 
+//COLOR CHANGES IN BACKGROUND
+int h=0;
+
 void setup() {
   frameRate(40);
   size(900, 600);
@@ -36,7 +39,13 @@ void setup() {
 }
 
 void draw() {
+
+  //DRAWING BACKGROUND
   background(bg);
+  fill(h%360, 100, 100, 15);
+  rect(0, 0, width, height);
+  h++;
+  fill(360);
 
   //THE RUN = 1 (MEANS THE GAME IS STARTED / CAN CONTINUE)
   if (run == 1) {
