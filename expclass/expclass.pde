@@ -1,4 +1,5 @@
-int n = 4;
+int n = 5;
+float tick;
 float m;
 ArrayList<Platforms> rects = new ArrayList<Platforms>();
 void setup() {
@@ -9,10 +10,13 @@ void setup() {
 void draw() {
   background(150);
   fill(255);
-  text(m, 10, 10);
+  tick=frameCount%100;
+  text(tick, 10, 10);
   m = random(n);
-  if (m>2&&m<3) {
-    rects.add(new Platforms());
+  if(tick==0){
+    if (m>2&&m<3) {
+      rects.add(new Platforms());
+    }
   }
   line(0, 540, width, 540);
   rect(25, 460, 40, 80);
@@ -23,13 +27,13 @@ void draw() {
     if (r.off()) {
       rects.remove(i);
     }
-    if (r.isThere()) {
-      for (int j=0; j<rects.size ()-1; j++) {
-        if (i!=j) {
-          rects.remove(j);
-        }
-      }
-    }
+//    if (r.isThere()) {
+//      for (int j=0; j<rects.size ()-1; j++) {
+//        if (i!=j) {
+//          rects.remove(j);
+//        }
+//      }
+//    }
   }
 }
 
