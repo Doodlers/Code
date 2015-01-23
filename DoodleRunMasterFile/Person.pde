@@ -59,7 +59,7 @@ class Person {
 
     //HOW THE PERSON IS DELAYED WHEN HE JUMPS AND CROUCHES
     delay = 0;
-    originalDelay = 20;
+    originalDelay = 10;
     delayShouldHappen = true;
 
     //IMAGE LOOP FOR PERSON
