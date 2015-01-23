@@ -101,12 +101,14 @@ class Person {
 
           //UP ARROW MAKES HIM JUMP
           if (keyCode == UP) {
+            println("jump");
             personY = groundH-personH-jumpAmount;
             personH = normalH;
           }
 
           //DOWN ARROW MAKES HIM CROUCH
           if (keyCode == DOWN) {
+            println("crouch");
             personH = crouchH;
             personY = groundH-personH;
           }
@@ -117,6 +119,7 @@ class Person {
 
     //IF THE DELAY REACHES A CERTAIN NUMBER, RESET THE PERSON
     if (delay == originalDelay) {
+      println("unjump");
       personH = normalH;
       personY = groundH-personH;
     }
@@ -125,6 +128,7 @@ class Person {
   //SEND THE CHARACTER TO PLATFORM IF USER PRESSES SPACE
   void goToPlatform() {
     if (key == ' ') {
+      println("go to platform");
       personY = platformH - personH;
       delayShouldHappen = false;
       onPlatform = true;
@@ -135,6 +139,7 @@ class Person {
   void goOffPlatform() {
     if (onPlatform == true) {
       if (key == 'c') {
+        println("get off platform");
         personY = groundH - personH;
         delayShouldHappen = true;
         onPlatform = false;

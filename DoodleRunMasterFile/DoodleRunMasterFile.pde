@@ -150,22 +150,10 @@ void draw() {
     text("Score: " + score, width/2, height/3);
     if (keyPressed) {
       if (key == 'g') {
+        tsquares = new ArrayList<Tsquare>();
+        lops = new ArrayList<Lop>();
+        books = new ArrayList<Book>();
         //IF G IS PRESSED, RESET THE LOCATIONS OF THE LOPS, TSQUARES, BOOKS, AND TEXT AND GO BACK TO THE GAME SCREEN
-        for (int i = tsquares.size ()-1; i >= 0; i--) {
-          Tsquare t = tsquares.get(i);
-          t.loc.x = random(width, width*2);
-          t.acc.x=0;
-        }
-        for (int i = lops.size ()-1; i >= 0; i--) {
-          Lop l = lops.get(i);
-          l.loc.x = random(width, width*2);
-          l.acc.x=0;
-        }
-        for (int i = books.size ()-1; i >= 0; i--) {
-          Book b = books.get(i);
-          b.loc.x = random(width, width*2);
-          b.acc.x=0;
-        }
         doodle.personY=doodle.groundH-doodle.personH;
         text.txtlocx = width;
         textSize(30);
