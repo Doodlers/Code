@@ -155,6 +155,8 @@ void draw() {
         books = new ArrayList<Book>();
         //IF G IS PRESSED, RESET THE LOCATIONS OF THE LOPS, TSQUARES, BOOKS, AND TEXT AND GO BACK TO THE GAME SCREEN
         doodle.personY=doodle.groundH-doodle.personH;
+        doodle.onPlatform=false;
+        doodle.delayShouldHappen=true;
         text.txtlocx = width;
         textSize(30);
         score=0;
